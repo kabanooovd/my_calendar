@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { CustomCalendar } from "./main/components/CustomCalendar";
+import "react-calendar/dist/Calendar.css";
+import React from "react";
+import { useFormik } from "formik";
+
+interface ICommon {
+  birthDay: Date | null;
+}
 
 function App() {
+  const formik = useFormik<ICommon>({
+    initialValues: {
+      birthDay: new Date(),
+    },
+    validate: (values) => {},
+    onSubmit: (values) => {},
+    // enableReinitialize: true,
+  });
+
+  console.log(formik.values.birthDay);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form onSubmit={formik.handleSubmit}>
+      <CustomCalendar formik={formik} formName={"birthDay"} />
+    </form>
   );
 }
 
